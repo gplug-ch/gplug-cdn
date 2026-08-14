@@ -1,0 +1,60 @@
+name: Deploy CDN assets to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deployment at a time; newer pushes supersede running ones.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Collect versioned assets (*.js, *.css)
+        run: |
+          mkdir -p _site
+          shopt -s nullglob
+          for dir in v*/; do
+            rsync -a \
+              --include='*/' \
+              --include='*.js' \
+              --include='*.css' \
+              --exclude='*' \
+              "$dir" "_site/$dir"
+          done
+          echo "Files to be published:"
+          find _site -type f
+
+      - name: Generate version index
+        run: |
+          {
+            echo "<!doctype html><meta charset=\"utf-8\"><title>gplug CDN</title><h1>gplug CDN</h1><ul>"
+            for f in $(find _site -type f \( -name '*.js' -o -name '*.css' \) | sed 's|^_site/||' | sort); do
+              echo "<li><a href=\"$f\">$f</a></li>"
+            done
+            echo "</ul>"
+          } > _site/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
