@@ -35,7 +35,15 @@ An index of all published files is generated at the site root.
 
 ## Publishing a new version
 
-From `ip5-fs26/ems/frontend`:
+Full device release (recommended) — from `ip5-fs26/ems/backend`:
+
+```sh
+make prod    # builds the .tapp with the CDN URLs baked in, then runs the
+             # frontend deploy so the matching bundle lands here
+```
+
+The version comes from `ems/backend/VERSION.txt`; bump it first for a new
+release. Frontend-only republish — from `ip5-fs26/ems/frontend`:
 
 ```sh
 npm run build
@@ -44,8 +52,8 @@ npm run deploy    # scripts/deploy-gh-pages.sh — clones this repo, copies
 ```
 
 The push triggers the `Deploy CDN assets to GitHub Pages` workflow, which
-publishes the site automatically. (`ems/backend`'s `make prod` runs both steps
-as part of a device release.)
+publishes the site automatically. Both paths need push access to this repo
+(an authenticated `git`).
 
 ## One-time setup
 
