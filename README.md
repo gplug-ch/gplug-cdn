@@ -5,10 +5,12 @@ CDN for the gplug EMS frontend assets, served via GitHub Pages.
 ## Layout
 
 Each release version lives in its own directory at the repo root, mirroring the
-frontend's `dist/` output (only `*.js` and `*.css` are published):
+frontend's `dist/` output (only `*.js`, `*.css` and `*.json` are published —
+`lang.json` is the UI dictionary the app fetches at runtime):
 
 ```
 v1.0.3/
+  lang.json
   assets/
     index-jsm-ts8o.js
     index-BQCCUC7F.css
@@ -33,16 +35,17 @@ An index of all published files is generated at the site root.
 
 ## Publishing a new version
 
-1. Build the frontend (`ip5-fs26/ems/frontend`): `npm run build`
-2. Copy the versioned output into this repo:
+From `ip5-fs26/ems/frontend`:
 
-   ```sh
-   rsync -a --include='*/' --include='*.js' --include='*.css' --exclude='*' \
-     ../ip5-fs26/ems/frontend/dist/vX.Y.Z/ vX.Y.Z/
-   ```
+```sh
+npm run build
+npm run deploy    # scripts/deploy-gh-pages.sh — clones this repo, copies
+                  # dist/<version>/ in, commits and pushes to main
+```
 
-3. Commit and push to `main` — the `Deploy CDN assets to GitHub Pages`
-   workflow publishes the site automatically.
+The push triggers the `Deploy CDN assets to GitHub Pages` workflow, which
+publishes the site automatically. (`ems/backend`'s `make prod` runs both steps
+as part of a device release.)
 
 ## One-time setup
 
