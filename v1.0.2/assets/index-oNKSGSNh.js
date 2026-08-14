@@ -1419,7 +1419,7 @@
         <${Me} title=${l("page.settings")} />
         <div class="pill-bar">${B}</div>
         ${R}
-      </div>`}var zo=["https://gplug.pages.dev/v1.0.2/lang.json"];function Co(){var e=Math.floor(Date.now()/1e3),t=[e-900,e];function n(s,f,c,d){for(var h=[],v=0;v<=90;v++){var p=e-900+v*10,g=v>=c&&v<=d?null:Math.max(0,s+f*Math.sin(v/9)+f*.4*Math.sin(v/2.3));h.push({t:p,y:g})}return h}for(var r=[],i=0;i<12;i++)r.push({t:e-12*900+i*900,y:Math.round((Math.sin(i/2)*.6-.15)*100)/100});for(var a=[],o=0;o<23;o++)a.push({id:o,ts:k.time(e-o*900,"15m"),imp:k.num(Math.round(Math.random()*0+o*7)/100,2),chf:k.chf((o%3===0?-1:1)*o*.19,!0)});return u`
+      </div>`}var zo=["https://gplug-ch.github.io/gplug-cdn/v1.0.2/lang.json"];function Co(){var e=Math.floor(Date.now()/1e3),t=[e-900,e];function n(s,f,c,d){for(var h=[],v=0;v<=90;v++){var p=e-900+v*10,g=v>=c&&v<=d?null:Math.max(0,s+f*Math.sin(v/9)+f*.4*Math.sin(v/2.3));h.push({t:p,y:g})}return h}for(var r=[],i=0;i<12;i++)r.push({t:e-12*900+i*900,y:Math.round((Math.sin(i/2)*.6-.15)*100)/100});for(var a=[],o=0;o<23;o++)a.push({id:o,ts:k.time(e-o*900,"15m"),imp:k.num(Math.round(Math.random()*0+o*7)/100,2),chf:k.chf((o%3===0?-1:1)*o*.19,!0)});return u`
     <div>
       <${Me} title=${l("page.demo")} subtitle="Komponenten-Galerie (dev)"
         actions=${u`<${Y} onClick=${function(){le("Toast!",{type:"info"})}}>Toast<//>`} />
